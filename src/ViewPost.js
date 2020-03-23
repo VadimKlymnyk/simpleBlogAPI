@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import CommentsPost from "./CommentsPost";
+import AddComm from "./AddComm";
 
 function getPost(id) {
   return fetch(
@@ -10,7 +11,6 @@ function getPost(id) {
 
 const ViewPost = props => {
   let clickPost = useParams();
-  let a = [clickPost.id];
   let [poste, setPoste] = useState([]);
 
   useEffect(async () => {
@@ -19,15 +19,26 @@ const ViewPost = props => {
     setPoste(res);
   }, [clickPost.id]);
 
+  function addComm(body1) {
+    console.log(clickPost.id);
+    setPoste(
+      poste.comments.push({
+        bodyId: poste.id,
+        body: body1,
+        id: poste.comments[poste.comments.length - 1].id + 1
+      })
+    );
+    console.log(poste.comments);
+  }
+
   return (
     <div className="container">
       <div className="section_header">
         <h1 className="section_title">{poste.title}</h1>
         <h3 className="section_subtitle">{poste.body}</h3>
       </div>
-      <input type="text"></input>
-      <button>Add Comment</button>
-      <CommentsPost poste={poste} />
+      <AddComm onCreate={addComm} />
+      <CommentsPost post={poste} />
     </div>
   );
 };

@@ -10,15 +10,12 @@ import {
   useParams
 } from "react-router-dom";
 
-
-function getData(){
+function getData() {
   return fetch("https://simpleblogapi.herokuapp.com/posts");
 }
 
-
 function App() {
   let [data, setData] = useState([]);
-  
 
   useEffect(async () => {
     let response = await getData();
@@ -26,11 +23,7 @@ function App() {
     //console.log(response);
     //console.log(res);
     setData(res);
-    
   }, []);
-
-  
-  
 
   return (
     <Router>
@@ -47,7 +40,7 @@ function App() {
         </div>
         <Switch>
           <Route exact path="/">
-            <PostList posts={data } />
+            <PostList posts={data} />
           </Route>
           <Route exact path="/posts/:id">
             <ViewPost posts={data} />
