@@ -1,6 +1,7 @@
 import React from "react";
 
 const CommentsPost = props => {
+  console.log(props);
   let a = props.post.comments;
   console.log(a);
   return (

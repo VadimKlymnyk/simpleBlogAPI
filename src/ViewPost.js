@@ -9,7 +9,7 @@ function getPost(id) {
   );
 }
 
-const ViewPost = props => {
+const ViewPost = () => {
   let clickPost = useParams();
   let [poste, setPoste] = useState([]);
 
@@ -20,15 +20,18 @@ const ViewPost = props => {
   }, [clickPost.id]);
 
   function addComm(body1) {
-    console.log(clickPost.id);
-    setPoste(
-      poste.comments.push({
+    console.log(body1);
+    setPoste({
+      title: poste.title,
+      body: poste.body,
+      id: poste.id,
+      comments: poste.comments.concat({
         bodyId: poste.id,
         body: body1,
         id: poste.comments[poste.comments.length - 1].id + 1
       })
-    );
-    console.log(poste.comments);
+    });
+    console.log(poste);
   }
 
   return (
@@ -38,7 +41,8 @@ const ViewPost = props => {
         <h3 className="section_subtitle">{poste.body}</h3>
       </div>
       <AddComm onCreate={addComm} />
-      <CommentsPost post={poste} />
+      {console.log(poste)}
+      <CommentsPost post={poste} key={poste.id} />
     </div>
   );
 };
