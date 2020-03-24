@@ -1,9 +1,9 @@
 import React from "react";
 
 const CommentsPost = props => {
-  console.log(props);
+  //console.log(props);
   let a = props.post.comments;
-  console.log(a);
+  //console.log(a);
   return (
     <div className="container_items">
       {a &&

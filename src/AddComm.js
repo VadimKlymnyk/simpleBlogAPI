@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 function AddComm({ onCreate }) {
   const [value, setValue] = useState("");

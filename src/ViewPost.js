@@ -9,6 +9,16 @@ function getPost(id) {
   );
 }
 
+function createPost(body) {
+  return fetch(`https://simpleblogapi.herokuapp.com/comments`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(body)
+  });
+}
+
 const ViewPost = () => {
   let clickPost = useParams();
   let [poste, setPoste] = useState([]);
@@ -19,19 +29,25 @@ const ViewPost = () => {
     setPoste(res);
   }, [clickPost.id]);
 
-  function addComm(body1) {
-    console.log(body1);
-    setPoste({
-      title: poste.title,
-      body: poste.body,
-      id: poste.id,
-      comments: poste.comments.concat({
-        bodyId: poste.id,
-        body: body1,
-        id: poste.comments[poste.comments.length - 1].id + 1
-      })
-    });
-    console.log(poste);
+  async function addComment(body) {
+    let createComment = {
+      postId: poste.id,
+      body: body
+    };
+
+    let respons = await createPost(createComment);
+    if (respons.status === 201) {
+      let res = await respons.json();
+
+      setPoste({
+        title: poste.title,
+        body: poste.body,
+        id: poste.id,
+        comments: [...poste.comments, res]
+      });
+    }
+
+    //console.log(poste);
   }
 
   return (
@@ -40,8 +56,7 @@ const ViewPost = () => {
         <h1 className="section_title">{poste.title}</h1>
         <h3 className="section_subtitle">{poste.body}</h3>
       </div>
-      <AddComm onCreate={addComm} />
-      {console.log(poste)}
+      <AddComm onCreate={addComment} />
       <CommentsPost post={poste} key={poste.id} />
     </div>
   );

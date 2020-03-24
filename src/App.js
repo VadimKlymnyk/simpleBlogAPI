@@ -12,6 +12,7 @@ import {
 
 function getData() {
   return fetch("https://simpleblogapi.herokuapp.com/posts");
+  
 }
 
 function App() {
@@ -40,6 +41,7 @@ function App() {
         </div>
         <Switch>
           <Route exact path="/">
+             {console.log(data)}
             <PostList posts={data} />
           </Route>
           <Route exact path="/posts/:id">
