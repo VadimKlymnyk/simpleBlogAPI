@@ -1,30 +1,27 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
 
-.wrapper{
-  
+.wrapper {
   margin: 0 auto;
-  
+
   text-align: center;
   width: 100%;
-    height: 120px;
-    background-color: #8cc34b; 
-    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
-  
+  height: 120px;
+  background-color: #8cc34b;
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
 }
-.section{
- 
+.section {
   flex: 1 0 auto;
   width: 100%;
   max-width: 1200px;
@@ -34,48 +31,47 @@ code {
   background-color: white;
 }
 
-.section_header{
+.section_header {
   width: 100%;
   max-width: 610px;
   margin: 0 auto 40px;
 
   text-align: center;
 }
-.footer_header{
+.footer_header {
   width: 100%;
   max-width: 610px;
   margin: 51px auto 0;
 
   text-align: center;
 }
-.section_title{
+.section_title {
   color: #212121;
   font-family: "Fira Sans";
   font-size: 42px;
   margin: 0 auto;
 }
 
-.content{
+.content {
   flex: 1 0 auto;
   height: 100%;
   display: flex;
   flex-direction: column;
   min-height: 100%;
-  
+
   width: 100%;
   max-width: 1200px;
   padding-bottom: 80px;
-  margin: 0 auto ;
+  margin: 0 auto;
   background-color: #f6f7f2;
 }
-.container_items{
+.container_items {
   flex-direction: column;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.container_item{
-    
+.container_item {
   margin: 10px;
   width: 100%;
   max-width: 300px;
@@ -83,10 +79,8 @@ code {
   flex-direction: column;
   justify-content: space-between;
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
-  
-  
 }
-.container_item_txt{
+.container_item_txt {
   text-align: center;
   padding: 20px;
   height: 100%;
@@ -94,21 +88,39 @@ code {
   max-width: 300px;
   background-color: #ffffff;
   font-family: "Fira Sans";
-  
 }
 
-.container_item_title{
-color: #212121;
-font-family: "Fira Sans";
-font-size: 21px;
-padding-bottom: 15px;
+.container_item_title {
+  color: #212121;
+  font-family: "Fira Sans";
+  font-size: 21px;
+  padding-bottom: 15px;
 }
-.container_item_text{
+.container_item_text {
   color: #727272;
   font-family: "Fira Sans";
   font-size: 14px;
   line-height: 21px;
+}
+.container_item:hover {
+  cursor: pointer;
+}
+
+.loader {
+  margin: 1rem;
+  border: 16px solid #f3f3f3; /* Light grey */
+  border-top: 16px solid #3498db; /* Blue */
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
   }
-  .container_item:hover{
-    cursor: pointer;
+  100% {
+    transform: rotate(360deg);
   }
+}

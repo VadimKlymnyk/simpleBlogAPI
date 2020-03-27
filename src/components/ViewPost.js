@@ -4,16 +4,6 @@ import CommentsPost from "../Comments/CommentsPost";
 import AddComm from "../Comments/AddComm";
 import * as requests from "../requests";
 
-function createPost(body) {
-  return fetch(`https://simpleblogapi.herokuapp.com/comments`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(body)
-  });
-}
-
 const ViewPost = () => {
   let clickPost = useParams();
   let [poste, setPoste] = useState([]);
@@ -29,17 +19,14 @@ const ViewPost = () => {
       body: body
     };
 
-    let respons = await createPost(createComment);
-    if (respons.status === 201) {
-      let res = await respons.json();
+    let res = await requests.addComment(createComment);
 
-      setPoste({
-        title: poste.title,
-        body: poste.body,
-        id: poste.id,
-        comments: [...poste.comments, res]
-      });
-    }
+    setPoste({
+      title: poste.title,
+      body: poste.body,
+      id: poste.id,
+      comments: [...poste.comments, res]
+    });
   }
 
   return (
@@ -53,4 +40,5 @@ const ViewPost = () => {
     </div>
   );
 };
+
 export default ViewPost;

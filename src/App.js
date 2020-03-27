@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import PostList from "./components/PostList.js";
 import ViewPost from "./components/ViewPost.js";
 import * as requests from "./requests";
+import { connect } from "react-redux";
 
 import {
   BrowserRouter as Router,
@@ -11,12 +12,9 @@ import {
   useParams
 } from "react-router-dom";
 
-function App() {
-  let [data, setData] = useState([]);
-
-  useEffect(async () => {
-    let articles = await requests.all();
-    setData(articles);
+function App(props) {
+  useEffect(() => {
+    props.getPosts();
   }, []);
 
   return (
@@ -34,10 +32,16 @@ function App() {
         </div>
         <Switch>
           <Route exact path="/">
-            <PostList posts={data} />
+            {!props.loading ? (
+              <PostList posts={props.posts} />
+            ) : (
+              <div className="container_items">
+                <div class="loader"></div>
+              </div>
+            )}
           </Route>
           <Route exact path="/posts/:id">
-            <ViewPost posts={data} />
+            <ViewPost />
           </Route>
         </Switch>
       </div>
@@ -45,4 +49,19 @@ function App() {
   );
 }
 
-export default App;
+const mapStateToProps = ({ posts }) => {
+  return {
+    posts: posts.data,
+    loading: posts.loading
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    getPosts: () => {
+      requests.all(dispatch);
+    }
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
