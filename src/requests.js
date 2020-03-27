@@ -12,11 +12,18 @@ export async function all(dispatch) {
   }
 }
 
-export async function one(id) {
-  let data = await makeRequest(
-    `https://simpleblogapi.herokuapp.com/posts/${id}?_embed=comments`
-  );
-  return data;
+export async function one(dispatch, id) {
+  try {
+    dispatch({ type: "GET_POST" });
+    let data = await makeRequest(
+      `https://simpleblogapi.herokuapp.com/posts/${id}?_embed=comments`
+    );
+    dispatch({ type: "GET_POST_SUCCESS", data});
+    return data;
+  } catch (error) {
+    dispatch({ type: "GET_POSTS_ERROR", error });
+  }
+  console.log(dispatch);
 }
 
 export async function addComment(body) {

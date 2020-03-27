@@ -3,14 +3,17 @@ import { useParams } from "react-router-dom";
 import CommentsPost from "../Comments/CommentsPost";
 import AddComm from "../Comments/AddComm";
 import * as requests from "../requests";
+import { connect } from "react-redux";
 
-const ViewPost = () => {
+function ViewPost(props) {
   let clickPost = useParams();
   let [poste, setPoste] = useState([]);
 
-  useEffect(async () => {
-    let post = await requests.one(clickPost.id);
-    setPoste(post);
+  useEffect(() => {
+    //let post = await requests.one(clickPost.id);
+    console.log(props.post);
+    setPoste(props.post);
+    props.getPost(clickPost.id);
   }, [clickPost.id]);
 
   async function addComment(body) {
@@ -30,15 +33,39 @@ const ViewPost = () => {
   }
 
   return (
-    <div className="container">
-      <div className="section_header">
-        <h1 className="section_title">{poste.title}</h1>
-        <h3 className="section_subtitle">{poste.body}</h3>
-      </div>
-      <AddComm onCreate={addComment} />
-      <CommentsPost post={poste} key={poste.id} />
+    <div>
+      {!props.loading ? (
+        <div className="container">
+          <div className="section_header">
+            <h1 className="section_title">{props.post.title}</h1>
+            <h3 className="section_subtitle">{props.post.body}</h3>
+          </div>
+          <AddComm onCreate={addComment} />
+          <CommentsPost post={props.post} key={props.post.id} />
+        </div>
+      ) : (
+        <div className="container_items">
+          <div class="loader"></div>
+        </div>
+      )}
     </div>
   );
+}
+
+const mapStateToProps = ({ post }) => {
+  return {
+    post: post.data,
+    loading: post.loading
+    //id: post.id
+  };
 };
 
-export default ViewPost;
+const mapDispatchToProps = dispatch => {
+  return {
+    getPost: id => {
+      requests.one(dispatch, id);
+    }
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ViewPost);
