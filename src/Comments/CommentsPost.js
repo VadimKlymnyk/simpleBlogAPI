@@ -1,8 +1,8 @@
 import React from "react";
 
-const CommentsPost = props => {
+const CommentsPost = ({post}) => {
   //console.log(props);
-  let a = props.post.comments;
+  let a = post.comments;
   //console.log(a);
   return (
     <div className="container_items">

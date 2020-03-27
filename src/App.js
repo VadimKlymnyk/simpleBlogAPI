@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import PostList from "./PostList.js";
-import ViewPost from "./ViewPost.js";
+import PostList from "./components/PostList.js";
+import ViewPost from "./components/ViewPost.js";
+import * as requests from "./requests";
 
 import {
   BrowserRouter as Router,
@@ -10,20 +11,12 @@ import {
   useParams
 } from "react-router-dom";
 
-function getData() {
-  return fetch("https://simpleblogapi.herokuapp.com/posts");
-  
-}
-
 function App() {
   let [data, setData] = useState([]);
 
   useEffect(async () => {
-    let response = await getData();
-    let res = await response.json();
-    //console.log(response);
-    //console.log(res);
-    setData(res);
+    let articles = await requests.all();
+    setData(articles);
   }, []);
 
   return (
@@ -41,7 +34,6 @@ function App() {
         </div>
         <Switch>
           <Route exact path="/">
-             {console.log(data)}
             <PostList posts={data} />
           </Route>
           <Route exact path="/posts/:id">

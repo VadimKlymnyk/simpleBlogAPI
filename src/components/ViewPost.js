@@ -1,13 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import CommentsPost from "./CommentsPost";
-import AddComm from "./AddComm";
-
-function getPost(id) {
-  return fetch(
-    `https://simpleblogapi.herokuapp.com/posts/${id}?_embed=comments`
-  );
-}
+import CommentsPost from "../Comments/CommentsPost";
+import AddComm from "../Comments/AddComm";
+import * as requests from "../requests";
 
 function createPost(body) {
   return fetch(`https://simpleblogapi.herokuapp.com/comments`, {
@@ -24,9 +19,8 @@ const ViewPost = () => {
   let [poste, setPoste] = useState([]);
 
   useEffect(async () => {
-    let response = await getPost(clickPost.id);
-    let res = await response.json();
-    setPoste(res);
+    let post = await requests.one(clickPost.id);
+    setPoste(post);
   }, [clickPost.id]);
 
   async function addComment(body) {
@@ -46,8 +40,6 @@ const ViewPost = () => {
         comments: [...poste.comments, res]
       });
     }
-
-    //console.log(poste);
   }
 
   return (
